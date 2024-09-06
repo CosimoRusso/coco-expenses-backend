@@ -9,7 +9,7 @@ from core.types.money import Money
 
 
 @dataclass
-class Entry:
+class FiscalEntry:
     description: str
     details: str | None
     effective_value: Money | None
