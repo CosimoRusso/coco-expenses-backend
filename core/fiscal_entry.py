@@ -5,10 +5,10 @@ import datetime as dt
 
 from core.date_range import DateRange
 from core.entry_category import EntryCategory
-from core.types.money import Money
+from core.base_types.money import Money
 
 
-@dataclass
+@dataclass(frozen=True, kw_only=True)
 class FiscalEntry:
     description: str
     details: str | None
@@ -16,7 +16,7 @@ class FiscalEntry:
     forecast_value: Money | None
     category: EntryCategory
     entry_date: dt.date
-    depreciation: DateRange
+    depreciation: DateRange | None
     is_expense: bool
 
     def __post_init__(self) -> None:
@@ -26,8 +26,6 @@ class FiscalEntry:
             raise ValueError(
                 "At least one of effective_value or forecast_value must be set"
             )
-        if not self.depreciation:
-            self.depreciation = DateRange(self.entry_date, self.entry_date)
         if not self.category:
             raise ValueError("Category must be set")
         if self.is_expense is None:

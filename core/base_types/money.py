@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from core.types.currency import Currency
+from core.base_types.currency import Currency
 
 
 @dataclass
