@@ -17,6 +17,7 @@ class Entry:
     category: EntryCategory
     entry_date: dt.date
     depreciation: DateRange
+    is_expense: bool
 
     def __post_init__(self) -> None:
         if not self.description:
@@ -29,3 +30,9 @@ class Entry:
             self.depreciation = DateRange(self.entry_date, self.entry_date)
         if not self.category:
             raise ValueError("Category must be set")
+        if self.is_expense is None:
+            raise ValueError("is_expense must be set")
+        if self.is_expense and not self.category.for_expenses:
+            raise ValueError("Category must be for expenses")
+        if not self.is_expense and self.category.for_expenses:
+            raise ValueError("Category must be for incomes")
