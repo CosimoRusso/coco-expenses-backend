@@ -2,3 +2,4 @@ venv
 .idea
 .vscode
 .git
+csv_server/data
