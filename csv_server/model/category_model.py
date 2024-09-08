@@ -8,12 +8,3 @@ class CategoryModel(BaseModel):
     code: str
     name: str
     for_expenses: bool
-
-    def to_csv_writable_dict(self) -> dict:
-        return {
-            "id": self.id,
-            "category": self.category,
-        }
-
-    class Meta:
-        table_name = "categories"

@@ -3,3 +3,4 @@ venv
 .vscode
 .git
 csv_server/data
+*.env
