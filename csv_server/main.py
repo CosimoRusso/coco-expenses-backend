@@ -12,6 +12,7 @@ from csv_server.model.base_model import (
     delete_entry,
 )
 from csv_server.model.category_model import CategoryModel
+from csv_server.model.fiscal_entry_model import FiscalEntryModel
 
 load_dotenv(Path(__file__).parent / ".env")
 
@@ -57,3 +58,12 @@ def delete_category(category_id: int) -> None:
         delete_entry(CategoryModel, category_id)
     except NotFoundError:
         raise HTTPException(status_code=404, detail="Category with given ID not found")
+
+
+@app.post("/fiscal_entry", status_code=201)
+def create_fiscal_entry(fiscal_entry: FiscalEntryModel) -> dict:
+    category_id = fiscal_entry.category_id
+    if category_id not in [category.id for category in get_all(CategoryModel)]:
+        raise HTTPException(status_code=404, detail="Category with given ID not found")
+    stored_fiscal_entry = save_model_to_csv(fiscal_entry)
+    return stored_fiscal_entry
