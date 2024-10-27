@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class CategoryModel(BaseModel):
-    id: int
+    id: int | None
     code: str
     name: str
     for_expenses: bool

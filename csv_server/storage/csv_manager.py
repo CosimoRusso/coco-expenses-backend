@@ -42,6 +42,8 @@ class CSVManager:
             raise ValueError(
                 f"Too many rows to delete ({num_rows_to_delete}), limit is {limit}."
             )
+        if num_rows_to_delete == 0:
+            return 0
         with open(tmp_file_path, "w") as f:
             writer = csv.DictWriter(f, fieldnames=content[0].keys())
             writer.writeheader()
@@ -59,6 +61,8 @@ class CSVManager:
 
     @classmethod
     def get_csv_file_path(self, filename: str) -> Path:
+        if not ROOT_CSV_FOLDER:
+            raise ValueError("ROOT_CSV_FOLDER environment variable not set.")
         return ROOT_CSV_FOLDER / Path(filename)
 
     @classmethod
