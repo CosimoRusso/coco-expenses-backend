@@ -1,14 +1,17 @@
 from __future__ import annotations
 
-from storage.csv_manager import CSVManager
+import os
+
+from csv_server.storage.csv_manager import CSVManager
 from csv_server.model.category_model import CategoryModel
 from csv_server.model.fiscal_entry_model import FiscalEntryModel
-from storage.memory_storage import MemoryStorage
-from settings import ENV
-from storage.storage_interface import StorageInterface
+from csv_server.storage.memory_storage import MemoryStorage
+from csv_server.storage.storage_interface import StorageInterface
 
 Model = CategoryModel | FiscalEntryModel
 ModelType = type[CategoryModel] | type[FiscalEntryModel]
+
+env = os.environ.get("ENV")
 
 
 model_to_filename_map: dict[ModelType, str] = {
@@ -16,7 +19,7 @@ model_to_filename_map: dict[ModelType, str] = {
     FiscalEntryModel: "fiscal_entries.csv",
 }
 
-storage: StorageInterface = CSVManager() if ENV != "TEST" else MemoryStorage()
+storage: StorageInterface = CSVManager() if env != "TEST" else MemoryStorage()
 
 
 def save_model_to_csv(model: Model) -> None:

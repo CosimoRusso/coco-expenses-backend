@@ -1,6 +1,5 @@
 from fastapi.testclient import TestClient
 from csv_server.main import app
-from settings import ENV
 
 client = TestClient(app)
 

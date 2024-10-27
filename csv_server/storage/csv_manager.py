@@ -4,7 +4,7 @@ import csv
 import os
 from pathlib import Path
 
-from settings import ROOT_CSV_FOLDER
+ROOT_CSV_FOLDER = os.getenv("ROOT_CSV_FOLDER")
 
 __all__ = ["CSVManager"]
 
