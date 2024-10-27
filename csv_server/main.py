@@ -53,7 +53,7 @@ def read_entry_category() -> list[CategoryModel]:
     return get_all(CategoryModel)
 
 
-@app.put("/entry_category/{category_id}")
+@app.put("/entry_category")
 def update_entry_category(category: CategoryModel) -> None:
     try:
         update_entry(category)
@@ -83,3 +83,17 @@ def delete_fiscal_entry(fiscal_entry_id: int) -> dict:
 @app.get("/fiscal_entry")
 def read_fiscal_entry() -> list[FiscalEntryModel]:
     return get_all(FiscalEntryModel)
+
+
+@app.put("/fiscal_entry")
+def update_fiscal_entry(fiscal_entry: FiscalEntryModel) -> dict:
+    category_id = fiscal_entry.category_id
+    if category_id not in [category.id for category in get_all(CategoryModel)]:
+        raise HTTPException(status_code=404, detail="Category with given ID not found")
+    try:
+        update_entry(fiscal_entry)
+        return {"status": "OK"}
+    except NotFoundError:
+        raise HTTPException(
+            status_code=404, detail="Fiscal entry with given ID not found"
+        )
