@@ -1,18 +1,17 @@
 from pydantic import BaseModel
 
-from core.date_range import DateRange
 import datetime as dt
-
-from csv_server.model.money_model import MoneyModel
 
 
 class FiscalEntryModel(BaseModel):
-    id: str | None
+    id: str | None = None
     description: str
     details: str | None
-    effective_value: MoneyModel | None
-    forecast_value: MoneyModel | None
+    effective_value: int | None
+    forecast_value: int | None
+    currency: str = "EUR"
     category_id: int
     entry_date: dt.date
-    depreciation: DateRange | None
+    depreciation_start_date: dt.date
+    depreciation_end_date: dt.date
     is_expense: bool
