@@ -14,11 +14,24 @@ from csv_server.model.base_model import (
 )
 from csv_server.model.category_model import CategoryModel
 from csv_server.model.fiscal_entry_model import FiscalEntryModel
+from fastapi.middleware.cors import CORSMiddleware
+
 
 load_dotenv(Path(__file__).parent / ".env")
 
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:8001",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def delete(model_type: ModelType, entry_id: int) -> dict:

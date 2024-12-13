@@ -4,7 +4,7 @@ import datetime as dt
 
 
 class FiscalEntryModel(BaseModel):
-    id: str | None = None
+    id: int | None = None
     description: str
     details: str | None
     effective_value: int | None
